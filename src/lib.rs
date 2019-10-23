@@ -44,7 +44,7 @@ impl<S: AsyncRead + AsyncWrite> NewSession<S> {
 }
 
 impl<S: AsyncRead + AsyncWrite> Session<S> {
-    pub fn channel_open(self) -> Box<Future<Item = Channel, Error = ()>> {}
+    pub fn channel_open(self) -> Box<Future<Item = OpenedChannel<S>, Error = ()>> {}
 }
 
 pub struct OpenedChannel;
