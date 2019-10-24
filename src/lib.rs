@@ -48,4 +48,13 @@ impl<S: AsyncRead + AsyncWrite> Session<S> {
 }
 
 pub struct OpenedChannel;
+
+impl OpenedChannel {
+    pub fn exec(self) -> Box<Future<Item = Channel, Error = ()>> {}
+}
+
 pub struct Channel;
+
+impl Channel {
+    pub fn exit_status(self) -> Box<Future<Item = u32, Error = ()>> {}
+}
