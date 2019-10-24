@@ -44,7 +44,7 @@ impl<S: AsyncRead + AsyncWrite> NewSession<S> {
 }
 
 impl<S: AsyncRead + AsyncWrite> Session<S> {
-    pub fn channel_open(self) -> Box<Future<Item = OpenedChannel<S>, Error = ()>> {}
+    pub fn channel_open(self) -> Box<Future<Item = (Session<S>, OpenedChannel<S>), Error = ()>> {}
 }
 
 pub struct OpenedChannel;
@@ -57,4 +57,21 @@ pub struct Channel;
 
 impl Channel {
     pub fn exit_status(self) -> Box<Future<Item = u32, Error = ()>> {}
+}
+
+use std::io::prelude::*;
+
+impl Read for Channel {
+    fn read(&mut self, buf: &mut [u8]) -> Result<usize> {}
+}
+
+impl Write for Channel {
+    fn write(&mut self, buf: &[u8]) -> Result<usize> {}
+    fn flush(&mut self) -> Result<()> {}
+}
+
+impl AsyncRead for Channel {}
+
+impl AsyncWrite for Channel {
+    fn shutdown(&mut self) -> Poll<(), Error>;
 }
