@@ -10,26 +10,8 @@ pub struct NewSession<S: AsyncRead + AsyncWrite> {
     connection: thrussh::client::Connection<S, Self>,
 }
 
-pub struct NewSessionFuture<S: AsyncRead + AsyncWrite> {}
-
-impl<S: AsyncRead + AsyncWrite> Future for NewSessionFuture<S> {
-    type Item = NewSession<S>;
-    type Error = ();
-
-    fn poll() {}
-}
-
 pub struct Session<S: AsyncRead + AsyncWrite> {
     connection: thrussh::client::Connection<S, Self>,
-}
-
-pub struct SessionFuture<S: AsyncRead + AsyncWrite> {}
-
-impl<S: AsyncRead + AsyncWrite> Future for SessionFuture<S> {
-    type Item = Session<S>;
-    type Error = ();
-
-    fn poll() {}
 }
 
 impl<S: AsyncRead + AsyncWrite> NewSession<S> {
