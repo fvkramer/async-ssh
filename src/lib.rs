@@ -5,6 +5,7 @@ extern crate tokio_io;
 
 use futures::Future;
 use tokio_io::{AsyncRead, AsyncWrite};
+use std::rc::Rc;
 
 pub struct NewSession<S: AsyncRead + AsyncWrite> {
     connection: thrussh::client::Connection<S, Self>,
@@ -35,7 +36,9 @@ impl OpenedChannel {
     pub fn exec(self) -> Box<Future<Item = Channel, Error = ()>> {}
 }
 
-pub struct Channel;
+pub struct Channel<S: AsyncRead + AsyncWrite> {
+    session: Rc<Session<S>>
+}
 
 impl Channel {
     pub fn exit_status(self) -> Box<Future<Item = u32, Error = ()>> {}
